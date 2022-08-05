@@ -16,8 +16,10 @@ var user = {};
 //declarou uma variável fora da função ela é visível dentro e fora da função
 
 function addLine(dataUser){
-    var tr = document.createElement("tr");
-    tr.innerHTML = `
+
+    console.log(dataUser);
+ 
+    document.getElementById("table-users").innerHTML = `
     <tr>
         <td>
           <img src="dist/img/user1-128x128.jpg" alt="User Image" class="img-circle img-sm">
@@ -34,7 +36,7 @@ function addLine(dataUser){
 
 `;
 
-    document.getElementById("table-users").appendChild(tr);
+
 
 }
 
@@ -57,7 +59,21 @@ fields.forEach(function(field, index){
 
 });
 
-addLine(user);
+var objectUser = new User(
+    user.name, 
+    user.gender, 
+    user.birth, 
+    user.country, 
+    user.email, 
+    user.password, 
+    user.photo, 
+    user.admin
+    
+    );
+
+//objeto = uma variável que instancia uma classe
+
+addLine(objectUser);
 
 
 
