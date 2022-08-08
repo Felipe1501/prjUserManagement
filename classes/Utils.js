@@ -5,3 +5,4 @@ class Utils{
         //estático
     }
 }
+//server side = PHP, ASP.NET e NODE.JS, quando a linguagem é executada no servidor

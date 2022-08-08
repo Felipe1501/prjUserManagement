@@ -86,9 +86,18 @@ class UserController {
     getValues(){
 
         let user = {};
-
+        let isValid = true;
 
         [...this.formEl.elements].forEach(function(field, index){
+
+            //indexOf = realiza buscas dentro de um ARRAY, e se não encontrar retornar - 1
+            if(['name', 'email', 'password'].indexOf(field.name) > -1 && !field.value){
+
+                field.parentElement.classList.add("has-error");
+                isValid = false;
+                //é um conjunto de atributos e métodos: Coleção, que são aninhados dentro de um objeto
+            }
+
             //sempre evitar código engessado, sempre crie códigos dinâmicos
                 if(field.name == "gender"){
                     if(field.checked){
@@ -104,6 +113,10 @@ class UserController {
                 }
             
             });
+
+            if(!isValid){
+                return false;
+            }
             
             return new User(
                 user.name, 
