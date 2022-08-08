@@ -35,27 +35,55 @@ class UserController {
 
            let tr = this.tableEl.rows[index];
 
-            tr.dataset.user = JSON.stringify(values);
+           let userOld = JSON.parse(tr.dataset.user);
+
+           //copia o valor de atributos de um objeto.
+           //object.assign = cria um objeto destino, retornando este objeto
+           let result = Object.assign({}, userOld, values);
+
+        this.getPhoto(this.formUpdateEl).then((content)=>{
+
+            if (!values.photo) {
+                result._photo = userOld._photo;
+            }else{
+                result._photo = content;
+            }
+
+           //JSON.stringify = transforma um objeto JSON em uma string
+            tr.dataset.user = JSON.stringify(result);
 
             tr.innerHTML = `
 
             <td>
-              <img src="${values.photo}" alt="User Image" class="img-circle img-sm">
+              <img src="${result._photo}" alt="User Image" class="img-circle img-sm">
             </td>
-            <td>${values.name}</td>
-            <td>${values.email}</td>
-            <td>${(values.admin) ? 'SIM' : 'NÃO'}</td>
-            <td>${Utils.dateFormat(values.register)}</td>
+            <td>${result._name}</td>
+            <td>${result._email}</td>
+            <td>${(result._admin) ? 'SIM' : 'NÃO'}</td>
+            <td>${Utils.dateFormat(result._register)}</td>
             <td>
               <button type="button" class="btn btn-primary btn-edit btn-xs btn-flat">Editar</button>
               <button type="button" class="btn btn-danger btn-xs btn-flat">Excluir</button>
             </td>
      
     `;
+    
+            this.addEventsTr(tr);
 
-        this.addEventsTr(tr);
+            this.updateCount();
 
-        this.updateCount();
+            this.formUpdateEl.reset();
+
+            btn.disabled = false;
+
+            this.showPanelCreate();
+        },
+        (e) =>{
+            //console.error comando que exibe mensagem como erro
+            console.error(e);
+        }
+        );
+
         
         });
         
@@ -77,7 +105,7 @@ class UserController {
 
         if(!values) return false;
 
-        this.getPhoto().then((content)=>{
+        this.getPhoto(this.formEl).then((content)=>{
             values.photo = content;
 
             this.addLine(values);
@@ -104,7 +132,7 @@ class UserController {
 
     }
 
-    getPhoto(){
+    getPhoto(formEl){
         return new Promise((resolve, reject)=>{
             //new FileReader = já invoca o método construtor
     let fileReader = new FileReader();
@@ -221,15 +249,15 @@ class UserController {
         tr.querySelector(".btn-edit").addEventListener("click", e=>{
 
             let json = JSON.parse(tr.dataset.user);
-            let form = document.querySelector("#form-user-update");
+            
  
-            form.dataset.trIndex = tr.sectionRowIndex;
+           this.formUpdateEl.dataset.trIndex = tr.sectionRowIndex;
  
             //For In = laço para percorrer objetos
             for (let name in json){
  
                  //crie códigos dinâmicos, para isso, sempre manter um padrão de nome de objetos e utilize laços
-              let field =  form.querySelector("[name=" + name.replace("_", "") + "]");
+              let field =  this.formUpdateEl.querySelector("[name=" + name.replace("_", "") + "]");
                  
                  
                  //palavra reservada, continue, ignora o restante das instruções e avança
@@ -243,7 +271,7 @@ class UserController {
                              break;
  
                              case 'radio':
-                             field =  form.querySelector("[name=" + name.replace("_", "") + "][value=" + json[name] + "]");
+                             field =  this.formUpdateEl.querySelector("[name=" + name.replace("_", "") + "][value=" + json[name] + "]");
                              field.checked = true;
                              break;
  
@@ -259,6 +287,8 @@ class UserController {
                  
  
             }
+
+            this.formUpdateEl.querySelector(".photo").src = json._photo;
  
              this.showPanelUpdate();
  
