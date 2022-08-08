@@ -14,7 +14,7 @@ var admin = document.querySelector("#exampleAdmin"); */
 
 //declarou uma variável fora da função ela é visível dentro e fora da função
 
-let userController = new UserController("form-user-create", "table-users");
+let userController = new UserController("form-user-create", "form-user-update", "table-users");
 
 //refactoring = refatorando ou melhorando seu código
 
