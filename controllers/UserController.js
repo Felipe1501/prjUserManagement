@@ -16,8 +16,18 @@ class UserController {
 
         event.preventDefault();
 
-        this.addLine(this.getValues());
-           
+        let values = this.getValues();
+
+
+        this.getPhoto((content) =>{
+            values.photo = content;
+
+            this.addLine(values);
+            });
+
+            //base64 = usado na internet
+
+            //binários por meio de transmissão de texto
         });
         
         
@@ -25,6 +35,29 @@ class UserController {
         //objeto = uma variável que instancia uma classe
 
     }
+
+    getPhoto(callback){
+    //new FileReader = já invoca o método construtor
+    let fileReader = new FileReader();
+
+   let elements = [...this.formEl.elements].filter(item=> {
+        if (item.name === 'photo'){
+            return item;
+        }
+    });
+
+    let file = elements[0].files[0];
+
+    fileReader.onload = ()=>{
+
+    
+    callback(fileReader.result);
+    };
+
+    //callback = após a execução de uma rotina
+    fileReader.readAsDataURL(file);
+}
+
 
     getValues(){
 
@@ -63,7 +96,7 @@ class UserController {
         this.tableEl.innerHTML = `
         <tr>
             <td>
-              <img src="dist/img/user1-128x128.jpg" alt="User Image" class="img-circle img-sm">
+              <img src="${dataUser.photo}" alt="User Image" class="img-circle img-sm">
             </td>
             <td>${dataUser.name}</td>
             <td>${dataUser.email}</td>

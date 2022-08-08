@@ -20,6 +20,8 @@ let userController = new UserController("form-user-create", "table-users");
 
 //spread = expressão esperando múltiplos parâmetros
 
+//FileReader = útil para ler e maninupalr arquivos e pastas
+
 //SPA = aplicação de página única
 
 //get = sempre vão para a url
