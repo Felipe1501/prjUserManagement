@@ -22,6 +22,8 @@ let userController = new UserController("form-user-create", "table-users");
 
 //FileReader = útil para ler e maninupalr arquivos e pastas
 
+//Promisse = executa uma ação assíncrona
+
 //SPA = aplicação de página única
 
 //get = sempre vão para a url

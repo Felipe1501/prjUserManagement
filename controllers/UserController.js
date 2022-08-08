@@ -18,12 +18,17 @@ class UserController {
 
         let values = this.getValues();
 
-
-        this.getPhoto((content) =>{
+        this.getPhoto().then((content)=>{
             values.photo = content;
 
             this.addLine(values);
-            });
+        },
+        (e) =>{
+            //console.error comando que exibe mensagem como erro
+            console.error(e);
+        }
+        );
+
 
             //base64 = usado na internet
 
@@ -36,28 +41,33 @@ class UserController {
 
     }
 
-    getPhoto(callback){
-    //new FileReader = já invoca o método construtor
+    getPhoto(){
+        return new Promise((resolve, reject)=>{
+            //new FileReader = já invoca o método construtor
     let fileReader = new FileReader();
 
-   let elements = [...this.formEl.elements].filter(item=> {
-        if (item.name === 'photo'){
-            return item;
-        }
-    });
-
-    let file = elements[0].files[0];
-
-    fileReader.onload = ()=>{
-
-    
-    callback(fileReader.result);
-    };
-
-    //callback = após a execução de uma rotina
-    fileReader.readAsDataURL(file);
-}
-
+    let elements = [...this.formEl.elements].filter(item=> {
+         if (item.name === 'photo'){
+             return item;
+         }
+     });
+ 
+     let file = elements[0].files[0];
+ 
+     fileReader.onload = ()=>{
+ 
+     resolve(fileReader.result);
+     };
+     
+     file.onerror = (e)=>{
+        reject(e);
+     }
+     //callback = após a execução de uma rotina
+     fileReader.readAsDataURL(file);
+ 
+ 
+        });
+    }
 
     getValues(){
 
