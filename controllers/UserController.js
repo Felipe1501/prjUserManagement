@@ -30,7 +30,8 @@ class UserController {
 
         let user = {};
 
-        this.formEl.elements.forEach(function(field, index){
+
+        [...this.formEl.elements].forEach(function(field, index){
             //sempre evitar código engessado, sempre crie códigos dinâmicos
                 if(field.name == "gender"){
                     if(field.checked){

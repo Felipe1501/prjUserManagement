@@ -16,8 +16,9 @@ var admin = document.querySelector("#exampleAdmin"); */
 
 let userController = new UserController("form-user-create", "table-users");
 
+//refactoring = refatorando ou melhorando seu código
 
-
+//spread = expressão esperando múltiplos parâmetros
 
 //SPA = aplicação de página única
 
