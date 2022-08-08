@@ -168,7 +168,28 @@ class UserController {
 
         tr.querySelector(".btn-edit").addEventListener("click", e=>{
 
-            console.log(JSON.parse(tr.dataset.user));
+           let json = JSON.parse(tr.dataset.user);
+           let form = document.querySelector("#form-user-update");
+
+           //For In = laço para percorrer objetos
+           for (let name in json){
+
+                //crie códigos dinâmicos, para isso, sempre manter um padrão de nome de objetos e utilize laços
+             let field =  form.querySelector("[name=" + name.replace("_", "") + "]");
+                
+                
+                //palavra reservada, continue, ignora o restante das instruções e avança
+                
+                //replace = função nativa que substitui dados, que procura o primeiro elementos e substitui
+                if (field){
+                    if(field.type == 'file') continue;
+
+                    field.value = json[name];
+                }
+                
+
+           }
+
             this.showPanelUpdate();
 
         });
