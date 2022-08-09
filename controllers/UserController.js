@@ -222,8 +222,9 @@ class UserController {
     getUserStorage(){
         let users = [];
 
-        if(sessionStorage.getItem("users")){
-            users = JSON.parse(sessionStorage.getItem("users"));
+        if(localStorage.getItem("users")){
+            
+            users = JSON.parse(localStorage.getItem("users"));
         }
 
         return users;
@@ -234,7 +235,7 @@ class UserController {
 
         users.forEach(dataUser => {
 
-            let user =  new User();
+            let user = new User();
 
             user.loadFromJSON(dataUser);
 
@@ -251,7 +252,8 @@ class UserController {
         //push = o método push adiciona ao final do array
         users.push(data);
 
-        sessionStorage.setItem("user", JSON.stringify(users));
+        //sessionStorage.setItem("users", JSON.stringify(users));
+        localStorage.setItem("users", JSON.stringify(users));
 
     }
 
@@ -259,7 +261,6 @@ class UserController {
 
         let tr = document.createElement('tr');
 
-        
 
         tr.dataset.user = JSON.stringify(dataUser);
 
