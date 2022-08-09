@@ -50,10 +50,11 @@ class UserController {
                 result._photo = content;
             }
 
-
             let user = new User();
 
             user.loadFromJSON(result);
+
+            user.save();
 
            //JSON.stringify = transforma um objeto JSON em uma string
             this.getTr(user, tr);
@@ -97,7 +98,7 @@ class UserController {
             
             values.photo = content;
 
-            this.insert(values);
+            values.save();
 
             this.addLine(values);
 
@@ -206,19 +207,10 @@ class UserController {
 
     }
 
-    getUserStorage(){
-        let users = [];
-
-        if(localStorage.getItem("users")){
-
-            users = JSON.parse(localStorage.getItem("users"));
-        }
-
-        return users;
-    }
+    
 
     selectAll(){
-        let users = this.getUserStorage();
+        let users = User.getUserStorage();
 
         users.forEach(dataUser => {
 
@@ -231,18 +223,9 @@ class UserController {
         });
     }
 
-    insert(data){
 
-        let users = this.getUserStorage();
+    //sessionStorage.setItem("users", JSON.stringify(users));
 
-        
-        //push = o método push adiciona ao final do array
-        users.push(data);
-
-        //sessionStorage.setItem("users", JSON.stringify(users));
-        localStorage.setItem("users", JSON.stringify(users));
-
-    }
 
     //function adiciona uma nova linha na tabela
     addLine(dataUser){
@@ -285,16 +268,21 @@ class UserController {
 
     addEventsTr(tr){
 
-        tr.querySelector(" .btn-delete").addEventListener("click", e => {
+        tr.querySelector(".btn-delete").addEventListener("click", e => {
             //confirm = abre uma janela de confirmação com ok e cancelar
             if (confirm("Deseja realmente excluir?")){
+
+                let user = new User();
+
+                user.loadFromJSON(JSON.parse(tr.dataset.user));
+
+                user.remove();
 
                 tr.remove();
 
                 this.updateCount();
 
             }
-
 
         });
 
