@@ -6,7 +6,7 @@ class UserController {
         this.formUpdateEl = document.getElementById(formIdUpdate);
         this.tableEl = document.getElementById(tableId);
         
-        //podemos utilizar qualquer nome de método, sempre colocar nomes auto-explicativos
+        //podemos utilizar qualquer nome de método, sempre colocar nomes auto-explicativos.
         this.onSubmit();
         this.onEdit();
         this.selectAll();
