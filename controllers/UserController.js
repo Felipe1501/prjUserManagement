@@ -129,7 +129,7 @@ class UserController {
             //new FileReader = já invoca o método construtor
     let fileReader = new FileReader();
 
-    let elements = [...this.formEl.elements].filter(item=> {
+    let elements = [...formEl.elements].filter(item=> {
          if (item.name === 'photo'){
              return item;
          }
@@ -163,7 +163,7 @@ class UserController {
         let user = {};
         let isValid = true;
 
-        [...formEl.elements].forEach(function(field, index){
+            [...formEl.elements].forEach(function(field, index){
 
             //indexOf = realiza buscas dentro de um ARRAY, e se não encontrar retornar - 1
             if(['name', 'email', 'password'].indexOf(field.name) > -1 && !field.value){
@@ -323,9 +323,7 @@ class UserController {
                              default:
                                  field.value = json[name];
                          }
-                     field.value = json[name];
                  }
-                 
  
             }
 
