@@ -91,7 +91,7 @@ class User{
       let usersID = parseInt(localStorage.getItem("usersID"));
 
       //refere-se a toda aplicação, window, que não se refere somente ao documento atual
-      if (!usersID) usersID = 0;
+      if (!usersID > 0) usersID = 0;
 
       usersID++;
 
@@ -111,7 +111,7 @@ class User{
             
             users.map(u => {
 
-                if(u._u == this.id){
+                if(u._id == this.id){
                     //Object.assign = copia atributos de um objeto(s) gerando um novo.
                     Object.assign(u, this);
                 }

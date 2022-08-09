@@ -3,7 +3,7 @@ class UserController {
     constructor(formIdCreate, formIdUpdate, tableId){
 
         this.formEl = document.getElementById(formIdCreate);
-        this.formUpdateEl = document.getElementById(formIdUpdate)
+        this.formUpdateEl = document.getElementById(formIdUpdate);
         this.tableEl = document.getElementById(tableId);
         
         //podemos utilizar qualquer nome de método, sempre colocar nomes auto-explicativos
